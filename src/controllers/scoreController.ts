@@ -2,16 +2,15 @@ import { type Request, type Response } from "express";
 import {
   getScoreContract,
   submitScoreContract,
-  //   submitScoreForContract,
+  submitScoreForContract,
 } from "../contract/contract";
 
 export const submitScore = async (req: Request, res: Response) => {
   try {
-    console.log(req.body, "body");
 
+    
     const { score } = req.body;
-
-    console.log(score);
+    console.log("Submitting Score for owner mode with score:", score);
 
     if (!score) return res.status(400).json({ error: "Score is required" });
 
@@ -25,28 +24,35 @@ export const submitScore = async (req: Request, res: Response) => {
 };
 
 // // Relayer mode
-// export const submitScoreFor = async (req: Request, res: Response) => {
-//   try {
-//     const { player, score } = req.body;
-//     if (!player || !score)
-//       return res.status(400).json({ error: "Player and score are required" });
+export const submitScoreFor = async (req: Request, res: Response) => {
+  try {
+    const { player, score } = req.body;
+    if (!player || !score)
+      return res.status(400).json({ error: "Player and score are required" });
 
-//     const tx = await submitScoreForContract(player, score);
-//     await tx.wait();
+    console.log(`Submitting Score for player ${player} with score:`, score);
 
-//     res.json({ success: true, txHash: tx.hash });
-//   } catch (err: any) {
-//     console.error(err);
-//     res.status(500).json({ error: err.message });
-//   }
-// };
+    const tx = await submitScoreForContract(player, score);
+
+    res.json({ success: true, txHash: tx.hash });
+  } catch (err: any) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+};
 
 // Get score
 export const getScore = async (req: Request, res: Response) => {
   try {
     const { address } = req.params;
     const score = await getScoreContract(address);
-    res.json(score);
+
+    const result = {
+      timestamp: score.timestamp.toString(),
+      score: score.score.toString(),
+    };
+
+    res.json(result);
   } catch (err: any) {
     console.error(err);
     res.status(500).json({ error: err.message });

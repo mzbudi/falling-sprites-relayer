@@ -14,13 +14,14 @@ export async function submitScoreContract(score: number) {
   return tx.wait();
 }
 
-// export async function submitScoreForContract(player: string, score: number) {
-//   const tx = await contract.submitScoreFor(player, score);
-//   return tx.wait();
-// }
+export async function submitScoreForContract(player: string, score: number) {
+  const tx = await contract.submitScoreFor(player, score);
+  return tx.wait();
+}
 
 export async function getScoreContract(address: string) {
-  return contract.getScore(address);
+  const entry = await contract.getScore(address);
+  return entry;
 }
 
 // Leaderboard contract instance

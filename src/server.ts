@@ -1,5 +1,5 @@
 import * as dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ debug: true });
 
 import express from "express";
 import cors from "cors";

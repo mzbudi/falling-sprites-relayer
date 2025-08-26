@@ -2,13 +2,13 @@ import { Router } from "express";
 import {
   submitScore,
   getScore,
-  // submitScoreFor,
+  submitScoreFor,
 } from "../controllers/scoreController";
 
 const router = Router();
 
 router.post("/submit-score", submitScore);
-// router.post("/submitFor", submitScoreFor);
-router.get("/score/:address", getScore);
+router.post("/submitFor", submitScoreFor);
+router.get("/:address", getScore);
 
 export default router;

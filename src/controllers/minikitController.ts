@@ -1,6 +1,6 @@
 import { type Request, type Response } from "express";
 import crypto from "crypto";
-import { verifySiweMessage } from "@worldcoin/minikit-js/*";
+import { verifySiweMessage } from "@worldcoin/minikit-js";
 
 const nonces = new Map();
 
